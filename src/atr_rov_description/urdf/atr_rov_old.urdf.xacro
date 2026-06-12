@@ -1,0 +1,348 @@
+<?xml version="1.0"?>
+<robot name="atr_mp_rov" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ── Properties from Phase 1 ──────────────────────────────── -->
+  <xacro:property name="mass"  value="119.0"/>
+  <xacro:property name="ixx"   value="6.91"/>
+  <xacro:property name="iyy"   value="37.73"/>
+  <xacro:property name="izz"   value="36.20"/>
+  <xacro:property name="ixy"   value="-0.24"/>
+  <xacro:property name="ixz"   value="0.60"/>
+  <xacro:property name="iyz"   value="0.02"/>
+
+  <!-- ── Base link (hull) ──────────────────────────────────────── -->
+  <!-- Add this before the base_link definition -->
+  <link name="world"/>
+  <joint name="world_to_base" type="fixed">
+    <parent link="world"/>
+    <child  link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  <link name="base_link">
+    <inertial>
+      <!-- CoM offset from geometric centre (Phase 1 Section 4.2) -->
+      <origin xyz="0.06136 -0.00281 -0.1292" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
+               iyy="${iyy}" iyz="${iyz}" izz="${izz}"/>
+    </inertial>
+
+    <!-- Single STL file used for both visual and collision -->
+    <!-- scale="0.001 0.001 0.001" converts mm to metres if SolidWorks exported in mm -->
+    <visual>
+      <origin xyz="0 0 0" rpy=" 0 0 0"/>
+      <geometry>
+        <mesh filename="package://atr_rov_description/meshes/4mm_houston_scaled_32mb.stl"
+              scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="light_yellow">
+        <color rgba="1.0 1.0 0.66 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://atr_rov_description/meshes/4mm_houston_scaled_32mb.stl"
+              scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ── Sensor frames (fixed links at physical mounting positions) ── -->
+  <link name="ins_link"/>
+  <joint name="ins_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="ins_link"/>
+    <origin xyz="-0.03428 -0.02276 0.00975" rpy="0 0 0"/>
+  </joint>
+
+  <link name="dvl_link"/>
+  <joint name="dvl_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="dvl_link"/>
+    <origin xyz="-0.841 -0.0028 0.29" rpy="0 0 0"/>
+  </joint>
+
+  <link name="depth_link"/>
+  <joint name="depth_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="depth_link"/>
+    <origin xyz="0.29 -0.0035 0.0266" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ── Thruster frames (propeller disc centres from Phase 1 TAM) ── -->
+  <!--
+    Thruster plugin applies force along +Z of the thruster link frame.
+    Rotations rotate the thruster link frame relative to base_link:
+
+    T1–T4 (vertical, push down):
+      rpy="0 0 0" — thruster Z aligns with base_link Z (downward in NED)
+
+    T5–T6 (surge, push forward):
+      rpy="0 -1.5708 0" — pitch -90° rotates thruster Z to point along +X
+
+    T7–T8 (sway, push port = -Y):
+      rpy="0 0 1.5708" — yaw +90° rotates thruster Z to point along -Y
+
+    Note: verify directions in validation test V3. If a thruster moves
+    the ROV in the wrong direction, negate the force command in the
+    bridge or flip the rotation by π (add 3.14159 to the relevant angle).
+  -->
+  <link name="thruster_1_link"/>
+  <joint name="thruster_1_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_1_link"/>
+    <origin xyz="0.371365 -0.15363 0.11142" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_2_link"/>
+  <joint name="thruster_2_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_2_link"/>
+    <origin xyz="0.371365 0.14037 0.11173" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_3_link"/>
+  <joint name="thruster_3_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_3_link"/>
+    <origin xyz="-0.53888 -0.15386 0.11142" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_4_link"/>
+  <joint name="thruster_4_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_4_link"/>
+    <origin xyz="-0.53888 0.14014 0.11173" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_5_link"/>
+  <joint name="thruster_5_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_5_link"/>
+    <origin xyz="0.09422 0.13338 -0.12167" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_6_link"/>
+  <joint name="thruster_6_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_6_link"/>
+    <origin xyz="0.09422 -0.14462 -0.12099" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_7_link"/>
+  <joint name="thruster_7_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_7_link"/>
+    <origin xyz="-0.38478 -0.09606 -0.18194" rpy="0 0 0"/>
+  </joint>
+
+  <link name="thruster_8_link"/>
+  <joint name="thruster_8_joint" type="fixed">
+    <parent link="base_link"/>
+    <child  link="thruster_8_link"/>
+    <origin xyz="0.19122 -0.09606 -0.18292" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ── Gazebo Fortress — Hydrodynamics plugin ────────────────── -->
+  <gazebo>
+    <plugin filename="ignition-gazebo-hydrodynamics-system"
+            name="ignition::gazebo::systems::Hydrodynamics">
+      <link_name>base_link</link_name>
+      <!-- Added mass (Phase 1 Section 5.1) -->
+      <xDotU>-53.65</xDotU>
+      <yDotV>-160.95</yDotV>
+      <zDotW>-160.95</zDotW>
+      <kDotP>-0.005</kDotP>
+      <mDotQ>-1.0</mDotQ>
+      <nDotR>-1.0</nDotR>
+      <!-- Linear damping (Phase 1 Section 5.2) -->
+      <xU>-40.43</xU>
+      <yV>-171.37</yV>
+      <zW>-348.87</zW>
+      <kP>-80.0</kP>
+      <mQ>-120.0</mQ>
+      <nR>-120.0</nR>
+      <!-- Quadratic damping (Phase 1 Section 5.3) -->
+      <xUabsU>-135.93</xUabsU>
+      <yVabsV>-453.10</yVabsV>
+      <zWabsW>-582.14</zWabsW>
+      <kPabsP>0.0</kPabsP>
+      <mQabsQ>0.0</mQabsQ>
+      <nRabsN>0.0</nRabsN>
+    </plugin>
+  </gazebo>
+
+  <!-- ── Gazebo Fortress — Buoyancy plugin ─────────────────────── -->
+  <gazebo>
+    <plugin filename="ignition-gazebo-buoyancy-system"
+            name="ignition::gazebo::systems::Buoyancy">
+      <uniform_fluid_density>1000</uniform_fluid_density>
+    </plugin>
+  </gazebo>
+
+  <!-- ── Gazebo Fortress — Thruster plugins (T1–T8) ────────────── -->
+  <gazebo>
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_1_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/1/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_2_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/2/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_3_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/3/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_4_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/4/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_5_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/5/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_6_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/6/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_7_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/7/force</topic>
+    </plugin>
+
+    <plugin filename="ignition-gazebo-thruster-system"
+            name="ignition::gazebo::systems::Thruster">
+      <namespace>atr_mp_rov</namespace>
+      <joint_name>thruster_8_joint</joint_name>
+      <thrust_coefficient>1.0</thrust_coefficient>
+      <fluid_density>1000</fluid_density>
+      <propeller_diameter>0.1</propeller_diameter>
+      <velocity_control>true</velocity_control>
+      <topic>/atr_mp_rov/thrusters/8/force</topic>
+    </plugin>
+  </gazebo>
+  <!-- Repeat plugin block for T2–T8 changing joint_name and topic -->
+
+  <!-- ── Gazebo Fortress — Odometry publisher ──────────────────── -->
+  <gazebo>
+    <plugin filename="ignition-gazebo-odometry-publisher-system"
+            name="ignition::gazebo::systems::OdometryPublisher">
+      <odom_topic>/nav/ins_odom</odom_topic>
+      <robot_base_frame>base_link</robot_base_frame>
+      <odom_frame>odom</odom_frame>
+      <publish_rate>100</publish_rate>
+    </plugin>
+  </gazebo>
+
+  <!-- ── Gazebo Fortress — IMU sensor ──────────────────────────── -->
+  <gazebo reference="ins_link">
+    <sensor name="ins_imu" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <imu>
+        <angular_velocity>
+          <x><noise type="gaussian"><mean>0</mean><stddev>0.001</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0</mean><stddev>0.001</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0</mean><stddev>0.001</stddev></noise></z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></x>
+          <y><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></y>
+          <z><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></z>
+        </linear_acceleration>
+      </imu>
+      <plugin filename="ignition-gazebo-imu-system"
+              name="ignition::gazebo::systems::Imu"/>
+    </sensor>
+  </gazebo>
+
+  <!-- ── Gazebo Fortress — Air pressure (depth) sensor ─────────── -->
+  <gazebo reference="depth_link">
+    <sensor name="depth_sensor" type="air_pressure">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <air_pressure>
+        <pressure>
+          <noise type="gaussian"><mean>0</mean><stddev>20</stddev></noise>
+        </pressure>
+      </air_pressure>
+      <plugin filename="ignition-gazebo-air-pressure-system"
+              name="ignition::gazebo::systems::AirPressure"/>
+    </sensor>
+  </gazebo>
+
+  <!-- ── Gazebo Fortress — Sonar (GPU lidar) ───────────────────── -->
+  <gazebo reference="sonar_link">
+    <sensor name="sonar" type="gpu_lidar">
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.3</min><max>30.0</max><resolution>0.01</resolution>
+        </range>
+        <noise type="gaussian"><mean>0</mean><stddev>0.05</stddev></noise>
+      </lidar>
+      <!-- No plugin block here — Sensors system goes in world SDF -->
+    </sensor>
+  </gazebo>
+
+</robot>
