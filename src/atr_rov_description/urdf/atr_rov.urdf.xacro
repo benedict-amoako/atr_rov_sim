@@ -344,7 +344,7 @@
   </gazebo>
 
   <!-- ── Gazebo Fortress — Sonar (GPU lidar) ───────────────────── -->
-  <gazebo reference="base_link">
+  <gazebo reference="sonar_link">
     <sensor name="sonar" type="gpu_lidar">
       <always_on>true</always_on>
       <update_rate>10</update_rate>
@@ -362,10 +362,7 @@
         </range>
         <noise type="gaussian"><mean>0</mean><stddev>0.05</stddev></noise>
       </lidar>
-      <plugin filename="ignition-gazebo-sensors-system"
-              name="ignition::gazebo::systems::Sensors">
-        <render_engine>ogre2</render_engine>
-      </plugin>
+      <!-- No plugin block here — Sensors system goes in world SDF -->
     </sensor>
   </gazebo>
 
