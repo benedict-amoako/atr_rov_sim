@@ -99,7 +99,7 @@ sudo apt install -y ignition-fortress
 Verify:
 ```bash
 ign gazebo --version
-# Expected: Ignition Gazebo, version 6.X.X
+# Expected: Gazebo Sim, version 6.X.X
 ```
 
 ### 4. ros_gz Bridge and Simulation Packages
