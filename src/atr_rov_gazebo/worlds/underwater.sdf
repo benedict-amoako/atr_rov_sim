@@ -1,0 +1,72 @@
+<?xml version="1.0" ?>
+<sdf version="1.9">
+  <world name="underwater">
+
+    <!-- 1ms physics step, real-time -->
+    <physics name="1ms" type="dart">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <dart>
+        <collision_detector>bullet</collision_detector>
+    </dart>
+    </physics>
+
+    <!-- Required system plugins — must all be present -->
+    <plugin filename="ignition-gazebo-physics-system"
+            name="ignition::gazebo::systems::Physics"/>
+    <plugin filename="ignition-gazebo-user-commands-system"
+            name="ignition::gazebo::systems::UserCommands"/>
+    <plugin filename="ignition-gazebo-scene-broadcaster-system"
+            name="ignition::gazebo::systems::SceneBroadcaster"/>
+    <!-- Sensors system — required for IMU, lidar, air pressure -->
+    <plugin filename="ignition-gazebo-sensors-system"
+            name="ignition::gazebo::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+
+    <!-- Buoyancy manager: graded fluid, water surface at z=0 -->
+    <plugin filename="ignition-gazebo-buoyancy-system"
+            name="ignition::gazebo::systems::Buoyancy">
+      <graded_buoyancy>
+        <default_fluid_density>1</default_fluid_density>
+        <fluid_layer>
+          <min_z>-1000</min_z>
+          <max_z>0</max_z>
+          <density>1000</density>
+        </fluid_layer>
+      </graded_buoyancy>
+    </plugin>
+
+    <!-- Gravity: NED convention, Z positive downward -->
+    <gravity>0 0 9.81</gravity>
+
+    <!-- Directional light -->
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Ocean floor at z=20 (20m depth) -->
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane><normal>0 0 1</normal><size>200 200</size></plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <pose>0 0 20 0 0 0</pose>
+          <geometry>
+            <plane><normal>0 0 1</normal><size>200 200</size></plane>
+          </geometry>
+          <material><ambient>0.1 0.2 0.4 1</ambient></material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>

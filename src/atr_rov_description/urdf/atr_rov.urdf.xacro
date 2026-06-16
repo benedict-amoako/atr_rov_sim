@@ -23,6 +23,11 @@
   <xacro:property name="com_rpy"
     value="${'3.142 0 0' if '$(arg fixed_to_world)' == 'true' else '0 0 0'}"/>
 
+  <!-- Tag to find the mesh directory for both display and simulation. 
+  The xacro arg allows the path to be overridden if needed, but by default 
+  it uses the meshes directory in this package. -->
+  <xacro:arg name="mesh_path" default="package://atr_rov_description/meshes"/>
+
   <!-- ── World anchor — RViz2 display only ────────────────────── -->
   <xacro:if value="$(arg fixed_to_world)">
     <link name="world"/>
@@ -47,7 +52,7 @@
     <visual>
       <origin xyz="0.1975 0.35 0.175" rpy=" 3.142 0 0"/>
       <geometry>
-        <mesh filename="package://atr_rov_description/meshes/4mm_houston_scaled_32mb.stl"
+        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_32mb.stl"
               scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_yellow">
@@ -56,9 +61,11 @@
     </visual>
     <collision>
       <origin xyz="0.1975 0.35 0.175" rpy="3.142 0 0"/>
+      <!-- <origin xyz="-0.12 0 0.23" rpy="3.142 0 0"/> -->
       <geometry>
-        <mesh filename="package://atr_rov_description/meshes/4mm_houston_scaled_32mb.stl"
+        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_32mb.stl"
               scale="0.001 0.001 0.001"/>
+        <!-- <box size="1.97 0.6 0.46"/> -->
       </geometry>
     </collision>
   </link>
@@ -110,60 +117,124 @@
     the ROV in the wrong direction, negate the force command in the
     bridge or flip the rotation by π (add 3.14159 to the relevant angle).
   -->
-  <link name="thruster_1_link"/>
-  <joint name="thruster_1_joint" type="fixed">
+  <link name="thruster_1_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_1_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_1_link"/>
     <origin xyz="0.371365 -0.15363 0.09" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_2_link"/>
-  <joint name="thruster_2_joint" type="fixed">
+  <link name="thruster_2_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_2_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_2_link"/>
     <origin xyz="0.371365 0.14037 0.09" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_3_link"/>
-  <joint name="thruster_3_joint" type="fixed">
+  <link name="thruster_3_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_3_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_3_link"/>
     <origin xyz="-0.514 0.14037 0.09" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_4_link"/>
-  <joint name="thruster_4_joint" type="fixed">
+  <link name="thruster_4_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_4_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_4_link"/>
     <origin xyz="-0.514 -0.15363 0.09" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_5_link"/>
-  <joint name="thruster_5_joint" type="fixed">
+  <link name="thruster_5_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_5_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_5_link"/>
     <origin xyz="0.11 -0.148 0.32" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_6_link"/>
-  <joint name="thruster_6_joint" type="fixed">
+  <link name="thruster_6_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_6_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_6_link"/>
     <origin xyz="0.11 0.13 0.32" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_7_link"/>
-  <joint name="thruster_7_joint" type="fixed">
+  <link name="thruster_7_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_7_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_7_link"/>
     <origin xyz="-0.36 0.075 0.379" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
-  <link name="thruster_8_link"/>
-  <joint name="thruster_8_joint" type="fixed">
+  <link name="thruster_8_link">
+    <inertial>
+      <mass value="0.001"/>
+      <inertia ixx="0.000001" ixy="0" ixz="0"
+              iyy="0.000001" iyz="0" izz="0.000001"/>
+    </inertial>
+  </link>
+  <joint name="thruster_8_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_8_link"/>
     <origin xyz="0.215 0.075 0.379" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
   </joint>
 
   <!-- ── Gazebo Fortress — Hydrodynamics plugin ────────────────── -->
@@ -195,27 +266,22 @@
     </plugin>
   </gazebo>
 
-  <!-- ── Gazebo Fortress — Buoyancy plugin ─────────────────────── -->
-  <gazebo>
-    <plugin filename="ignition-gazebo-buoyancy-system"
-            name="ignition::gazebo::systems::Buoyancy">
-      <uniform_fluid_density>1000</uniform_fluid_density>
-    </plugin>
-  </gazebo>
-
   <!-- ── Gazebo Fortress — Thruster plugins (T1–T8) ────────────── -->
   <gazebo>
-    <plugin filename="ignition-gazebo-thruster-system"
-            name="ignition::gazebo::systems::Thruster">
+    <plugin 
+      filename="ignition-gazebo-thruster-system"
+      name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
       <joint_name>thruster_1_joint</joint_name>
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/1/force</topic>
+      <topic>thrusters/1/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -224,9 +290,11 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/2/force</topic>
+      <topic>thrusters/2/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -235,9 +303,11 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/3/force</topic>
+      <topic>thrusters/3/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -246,9 +316,11 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/4/force</topic>
+      <topic>thrusters/4/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -257,9 +329,11 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/5/force</topic>
+      <topic>thrusters/5/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -268,9 +342,11 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/6/force</topic>
+      <topic>thrusters/6/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -279,9 +355,11 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/7/force</topic>
+      <topic>thrusters/7/force</topic>
     </plugin>
+  </gazebo>
 
+  <gazebo>
     <plugin filename="ignition-gazebo-thruster-system"
             name="ignition::gazebo::systems::Thruster">
       <namespace>atr_mp_rov</namespace>
@@ -290,7 +368,7 @@
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
       <velocity_control>true</velocity_control>
-      <topic>/atr_mp_rov/thrusters/8/force</topic>
+      <topic>thrusters/8/force</topic>
     </plugin>
   </gazebo>
   <!-- Repeat plugin block for T2–T8 changing joint_name and topic -->
@@ -323,8 +401,8 @@
           <z><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></z>
         </linear_acceleration>
       </imu>
-      <plugin filename="ignition-gazebo-imu-system"
-              name="ignition::gazebo::systems::Imu"/>
+      <!-- <plugin filename="ignition-gazebo-imu-system"
+              name="ignition::gazebo::systems::Imu"/> -->
     </sensor>
   </gazebo>
 
@@ -338,8 +416,8 @@
           <noise type="gaussian"><mean>0</mean><stddev>20</stddev></noise>
         </pressure>
       </air_pressure>
-      <plugin filename="ignition-gazebo-air-pressure-system"
-              name="ignition::gazebo::systems::AirPressure"/>
+      <!-- <plugin filename="ignition-gazebo-air-pressure-system"
+              name="ignition::gazebo::systems::AirPressure"/> -->
     </sensor>
   </gazebo>
 
