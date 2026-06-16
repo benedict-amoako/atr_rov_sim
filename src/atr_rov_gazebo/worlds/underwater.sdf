@@ -3,12 +3,13 @@
   <world name="underwater">
 
     <!-- 1ms physics step, real-time -->
-    <physics name="1ms" type="dart">
-      <max_step_size>0.001</max_step_size>
+    <physics name="1ms" type="bullet">
+      <max_step_size>0.25</max_step_size>
       <real_time_factor>1.0</real_time_factor>
-      <dart>
+      <real_time_update_rate>10</real_time_update_rate>
+      <!-- <dart>
         <collision_detector>bullet</collision_detector>
-    </dart>
+      </dart> -->
     </physics>
 
     <!-- Required system plugins — must all be present -->

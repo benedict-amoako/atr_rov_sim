@@ -41,7 +41,7 @@
   <link name="base_link">
     <inertial>
       <!-- CoM offset — switches between display and physics frame -->
-      <origin xyz="0.06136 -0.00281 ${com_z}" rpy="${com_rpy}"/>
+      <origin xyz="0.06136 -0.00281 ${com_z}" rpy="0 0 0"/>
       <mass value="${mass}"/>
       <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
                iyy="${iyy}" iyz="${iyz}" izz="${izz}"/>
@@ -52,7 +52,7 @@
     <visual>
       <origin xyz="0.1975 0.35 0.175" rpy=" 3.142 0 0"/>
       <geometry>
-        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_32mb.stl"
+        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_16mb.stl"
               scale="0.001 0.001 0.001"/>
       </geometry>
       <material name="light_yellow">
@@ -61,11 +61,9 @@
     </visual>
     <collision>
       <origin xyz="0.1975 0.35 0.175" rpy="3.142 0 0"/>
-      <!-- <origin xyz="-0.12 0 0.23" rpy="3.142 0 0"/> -->
       <geometry>
-        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_32mb.stl"
+        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_16mb.stl"
               scale="0.001 0.001 0.001"/>
-        <!-- <box size="1.97 0.6 0.46"/> -->
       </geometry>
     </collision>
   </link>
@@ -124,12 +122,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_1_joint" type="revolute">
+  <joint name="thruster_1_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_1_link"/>
     <origin xyz="0.371365 -0.15363 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_2_link">
@@ -139,12 +137,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_2_joint" type="revolute">
+  <joint name="thruster_2_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_2_link"/>
     <origin xyz="0.371365 0.14037 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_3_link">
@@ -154,12 +152,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_3_joint" type="revolute">
+  <joint name="thruster_3_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_3_link"/>
     <origin xyz="-0.514 0.14037 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_4_link">
@@ -169,12 +167,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_4_joint" type="revolute">
+  <joint name="thruster_4_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_4_link"/>
     <origin xyz="-0.514 -0.15363 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_5_link">
@@ -184,12 +182,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_5_joint" type="revolute">
+  <joint name="thruster_5_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_5_link"/>
     <origin xyz="0.11 -0.148 0.32" rpy="0 0 0"/>
     <axis xyz="1 0 0"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_6_link">
@@ -199,12 +197,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_6_joint" type="revolute">
+  <joint name="thruster_6_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_6_link"/>
     <origin xyz="0.11 0.13 0.32" rpy="0 0 0"/>
     <axis xyz="1 0 0"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_7_link">
@@ -214,12 +212,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_7_joint" type="revolute">
+  <joint name="thruster_7_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_7_link"/>
     <origin xyz="-0.36 0.075 0.379" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <link name="thruster_8_link">
@@ -229,12 +227,12 @@
               iyy="0.000001" iyz="0" izz="0.000001"/>
     </inertial>
   </link>
-  <joint name="thruster_8_joint" type="revolute">
+  <joint name="thruster_8_joint" type="continuous">
     <parent link="base_link"/>
     <child  link="thruster_8_link"/>
     <origin xyz="0.215 0.075 0.379" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/>
+    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
   </joint>
 
   <!-- ── Gazebo Fortress — Hydrodynamics plugin ────────────────── -->
@@ -380,7 +378,7 @@
       <odom_topic>/nav/ins_odom</odom_topic>
       <robot_base_frame>base_link</robot_base_frame>
       <odom_frame>odom</odom_frame>
-      <publish_rate>100</publish_rate>
+      <publish_rate>50</publish_rate>
     </plugin>
   </gazebo>
 
@@ -388,7 +386,7 @@
   <gazebo reference="ins_link">
     <sensor name="ins_imu" type="imu">
       <always_on>true</always_on>
-      <update_rate>100</update_rate>
+      <update_rate>50</update_rate>
       <imu>
         <angular_velocity>
           <x><noise type="gaussian"><mean>0</mean><stddev>0.001</stddev></noise></x>
@@ -401,8 +399,8 @@
           <z><noise type="gaussian"><mean>0</mean><stddev>0.01</stddev></noise></z>
         </linear_acceleration>
       </imu>
-      <!-- <plugin filename="ignition-gazebo-imu-system"
-              name="ignition::gazebo::systems::Imu"/> -->
+      <plugin filename="ignition-gazebo-imu-system"
+              name="ignition::gazebo::systems::Imu"/>
     </sensor>
   </gazebo>
 
