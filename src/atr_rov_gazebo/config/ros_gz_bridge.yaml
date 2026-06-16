@@ -1,0 +1,65 @@
+- ros_topic_name: /atr_mp_rov/thrusters/t1/force
+  gz_topic_name: atr_mp_rov/thrusters/1/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t2/force
+  gz_topic_name: atr_mp_rov/thrusters/2/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t3/force
+  gz_topic_name: atr_mp_rov/thrusters/3/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t4/force
+  gz_topic_name: atr_mp_rov/thrusters/4/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t5/force
+  gz_topic_name: atr_mp_rov/thrusters/5/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t6/force
+  gz_topic_name: atr_mp_rov/thrusters/6/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t7/force
+  gz_topic_name: atr_mp_rov/thrusters/7/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /atr_mp_rov/thrusters/t8/force
+  gz_topic_name: atr_mp_rov/thrusters/8/force
+  ros_type_name: std_msgs/msg/Float64
+  gz_type_name: ignition.msgs.Double
+  direction: ROS_TO_GZ
+
+- ros_topic_name: /nav/ins_odom
+  gz_topic_name: /nav/ins_odom
+  ros_type_name: nav_msgs/msg/Odometry
+  gz_type_name: ignition.msgs.Odometry
+  direction: GZ_TO_ROS
+
+- ros_topic_name: /ins/imu
+  gz_topic_name: /world/underwater/model/atr_mp_rov/link/base_link/sensor/ins_imu/imu
+  ros_type_name: sensor_msgs/msg/Imu
+  gz_type_name: ignition.msgs.IMU
+  direction: GZ_TO_ROS
+
+- ros_topic_name: /clock
+  gz_topic_name: /clock
+  ros_type_name: rosgraph_msgs/msg/Clock
+  gz_type_name: ignition.msgs.Clock
+  direction: GZ_TO_ROS

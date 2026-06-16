@@ -1,6 +1,6 @@
 import os
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, TimerAction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import Command, PathJoinSubstitution
 from launch_ros.actions import Node
@@ -15,6 +15,7 @@ def generate_launch_description():
 
     world = os.path.join(gz_pkg, 'worlds', 'underwater.sdf')
     urdf  = os.path.join(desc_pkg, 'urdf', 'atr_rov.urdf.xacro')
+    bridge_cfg = os.path.join(gz_pkg, 'config', 'ros_gz_bridge.yaml')
 
     robot_description = ParameterValue(
         Command(['xacro ', urdf, ' mesh_path:=', mesh_path]),
@@ -41,8 +42,18 @@ def generate_launch_description():
             '-topic', 'robot_description',
             '-x', '0.0',
             '-y', '0.0',
-            '-z', '-5.0',
+            '-z', '-2.0',
         ],
         output='screen')
+    
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='bridge_node',
+        parameters=[{
+            'config_file': bridge_cfg,
+        }],
+        output='screen')
+    
+    spawn_delayed = TimerAction(period=5.0, actions=[spawn])
 
-    return LaunchDescription([gz_sim, rsp, spawn])
+    return LaunchDescription([gz_sim, rsp, spawn_delayed, bridge])
