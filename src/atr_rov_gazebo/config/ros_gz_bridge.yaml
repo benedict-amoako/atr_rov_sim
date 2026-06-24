@@ -1,47 +1,47 @@
 - ros_topic_name: /atr_mp_rov/thrusters/t1/force
-  gz_topic_name: atr_mp_rov/thrusters/1/force
+  gz_topic_name: atr_mp_rov/thrusters/t1/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t2/force
-  gz_topic_name: atr_mp_rov/thrusters/2/force
+  gz_topic_name: atr_mp_rov/thrusters/t2/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t3/force
-  gz_topic_name: atr_mp_rov/thrusters/3/force
+  gz_topic_name: atr_mp_rov/thrusters/t3/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t4/force
-  gz_topic_name: atr_mp_rov/thrusters/4/force
+  gz_topic_name: atr_mp_rov/thrusters/t4/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t5/force
-  gz_topic_name: atr_mp_rov/thrusters/5/force
+  gz_topic_name: atr_mp_rov/thrusters/t5/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t6/force
-  gz_topic_name: atr_mp_rov/thrusters/6/force
+  gz_topic_name: atr_mp_rov/thrusters/t6/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t7/force
-  gz_topic_name: atr_mp_rov/thrusters/7/force
+  gz_topic_name: atr_mp_rov/thrusters/t7/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
 - ros_topic_name: /atr_mp_rov/thrusters/t8/force
-  gz_topic_name: atr_mp_rov/thrusters/8/force
+  gz_topic_name: atr_mp_rov/thrusters/t8/force
   ros_type_name: std_msgs/msg/Float64
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
