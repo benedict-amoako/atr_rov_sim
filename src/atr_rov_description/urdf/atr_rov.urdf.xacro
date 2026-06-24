@@ -41,7 +41,7 @@
   <link name="base_link">
     <inertial>
       <!-- CoM offset — switches between display and physics frame -->
-      <origin xyz="0.06136 -0.00281 ${com_z}" rpy="0 0 0"/>
+      <origin xyz="-0.11 -0.001 ${com_z}" rpy="0 0 0"/>
       <mass value="${mass}"/>
       <inertia ixx="${ixx}" ixy="${ixy}" ixz="${ixz}"
                iyy="${iyy}" iyz="${iyz}" izz="${izz}"/>
@@ -60,10 +60,9 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="0.1975 0.35 0.175" rpy="3.142 0 0"/>
+      <origin xyz="-0.11 -0.001 0.22" rpy=" 0 0 0"/>
       <geometry>
-        <mesh filename="$(arg mesh_path)/4mm_houston_scaled_16mb.stl"
-              scale="0.001 0.001 0.001"/>
+        <box size="1.97 0.6 0.1038"/>
       </geometry>
     </collision>
   </link>
@@ -117,9 +116,9 @@
   -->
   <link name="thruster_1_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_1_joint" type="continuous">
@@ -132,9 +131,9 @@
 
   <link name="thruster_2_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_2_joint" type="continuous">
@@ -147,9 +146,9 @@
 
   <link name="thruster_3_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_3_joint" type="continuous">
@@ -162,9 +161,9 @@
 
   <link name="thruster_4_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_4_joint" type="continuous">
@@ -177,9 +176,9 @@
 
   <link name="thruster_5_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_5_joint" type="continuous">
@@ -192,9 +191,9 @@
 
   <link name="thruster_6_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_6_joint" type="continuous">
@@ -207,9 +206,9 @@
 
   <link name="thruster_7_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_7_joint" type="continuous">
@@ -222,9 +221,9 @@
 
   <link name="thruster_8_link">
     <inertial>
-      <mass value="0.001"/>
-      <inertia ixx="0.000001" ixy="0" ixz="0"
-              iyy="0.000001" iyz="0" izz="0.000001"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+              iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
   <joint name="thruster_8_joint" type="continuous">
@@ -241,9 +240,13 @@
             name="ignition::gazebo::systems::Hydrodynamics">
       <link_name>base_link</link_name>
       <!-- Added mass (Phase 1 Section 5.1) -->
+      <!-- yDotV/zDotW capped below vehicle mass (119 kg): Ignition applies added
+           mass as an explicit force; M_A > m causes acceleration divergence. -->
+      <!-- <yDotV>-160.95</yDotV> -->
+      <!-- <zDotW>-160.95</zDotW> -->
       <xDotU>-53.65</xDotU>
-      <yDotV>-160.95</yDotV>
-      <zDotW>-160.95</zDotW>
+        <yDotV>-95.0</yDotV>
+        <zDotW>-95.0</zDotW>
       <kDotP>-0.005</kDotP>
       <mDotQ>-1.0</mDotQ>
       <nDotR>-1.0</nDotR>
@@ -260,7 +263,7 @@
       <zWabsW>-582.14</zWabsW>
       <kPabsP>0.0</kPabsP>
       <mQabsQ>0.0</mQabsQ>
-      <nRabsN>0.0</nRabsN>
+      <nRabsR>0.0</nRabsR>
     </plugin>
   </gazebo>
 

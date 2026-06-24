@@ -2,14 +2,13 @@
 <sdf version="1.9">
   <world name="underwater">
 
-    <!-- 1ms physics step, real-time -->
+    <!-- 1ms physics step using Bullet Featherstone.
+         DART aborts on any NaN joint transform; Bullet handles articulated
+         bodies with continuous joints more robustly in Ignition Fortress. -->
     <physics name="1ms" type="bullet">
-      <max_step_size>0.25</max_step_size>
+      <max_step_size>0.001</max_step_size>
       <real_time_factor>1.0</real_time_factor>
-      <real_time_update_rate>10</real_time_update_rate>
-      <!-- <dart>
-        <collision_detector>bullet</collision_detector>
-      </dart> -->
+      <real_time_update_rate>1000</real_time_update_rate>
     </physics>
 
     <!-- Required system plugins — must all be present -->
@@ -31,14 +30,14 @@
       <graded_buoyancy>
         <default_fluid_density>1</default_fluid_density>
         <fluid_layer>
-          <min_z>-1000</min_z>
+          <min_z>-20</min_z>
           <max_z>0</max_z>
           <density>1000</density>
         </fluid_layer>
       </graded_buoyancy>
     </plugin>
 
-    <!-- Gravity: NED convention, Z positive downward -->
+    <!-- Gravity in ENU: -Z is downward -->
     <gravity>0 0 -9.81</gravity>
 
     <!-- Directional light -->
@@ -50,8 +49,11 @@
       <direction>-0.5 0.1 -0.9</direction>
     </light>
 
-    <!-- Ocean floor at z=20 (20m depth) -->
+    <!-- Ocean floor at 20m depth. Pose on the MODEL moves both collision and
+         visual together. A pose on only the visual leaves collision at z=0,
+         which means any spawn below the water surface is inside the ground. -->
     <model name="ground_plane">
+      <pose>0 0 -20 0 0 0</pose>
       <static>true</static>
       <link name="link">
         <collision name="collision">
@@ -60,7 +62,6 @@
           </geometry>
         </collision>
         <visual name="visual">
-          <pose>0 0 -10 0 0 0</pose>
           <geometry>
             <plane><normal>0 0 1</normal><size>200 200</size></plane>
           </geometry>
