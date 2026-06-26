@@ -55,5 +55,6 @@ def generate_launch_description():
         output='screen')
     
     spawn_delayed = TimerAction(period=5.0, actions=[spawn])
+    bridge_delayed = TimerAction(period=7.0, actions=[bridge])
 
-    return LaunchDescription([gz_sim, rsp, spawn_delayed, bridge])
+    return LaunchDescription([gz_sim, rsp, spawn_delayed, bridge_delayed])

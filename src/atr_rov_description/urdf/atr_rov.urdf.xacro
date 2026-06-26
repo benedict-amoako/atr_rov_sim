@@ -121,12 +121,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_1_joint" type="continuous">
+  <joint name="thruster_1_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_1_link"/>
     <origin xyz="0.371365 -0.15363 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_2_link">
@@ -136,12 +136,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_2_joint" type="continuous">
+  <joint name="thruster_2_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_2_link"/>
     <origin xyz="0.371365 0.14037 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_3_link">
@@ -151,12 +151,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_3_joint" type="continuous">
+  <joint name="thruster_3_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_3_link"/>
     <origin xyz="-0.514 0.14037 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_4_link">
@@ -166,12 +166,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_4_joint" type="continuous">
+  <joint name="thruster_4_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_4_link"/>
     <origin xyz="-0.514 -0.15363 0.09" rpy="0 0 0"/>
     <axis xyz="0 0 1"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_5_link">
@@ -181,12 +181,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_5_joint" type="continuous">
+  <joint name="thruster_5_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_5_link"/>
     <origin xyz="0.11 -0.148 0.32" rpy="0 0 0"/>
     <axis xyz="1 0 0"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_6_link">
@@ -196,12 +196,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_6_joint" type="continuous">
+  <joint name="thruster_6_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_6_link"/>
     <origin xyz="0.11 0.13 0.32" rpy="0 0 0"/>
     <axis xyz="1 0 0"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_7_link">
@@ -211,12 +211,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_7_joint" type="continuous">
+  <joint name="thruster_7_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_7_link"/>
     <origin xyz="-0.36 0.075 0.379" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <link name="thruster_8_link">
@@ -226,12 +226,12 @@
               iyy="0.001" iyz="0" izz="0.001"/>
     </inertial>
   </link>
-  <joint name="thruster_8_joint" type="continuous">
+  <joint name="thruster_8_joint" type="revolute">
     <parent link="base_link"/>
     <child  link="thruster_8_link"/>
     <origin xyz="0.215 0.075 0.379" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
-    <!-- <limit lower="-1e9" upper="1e9" effort="100" velocity="1000"/> -->
+    <limit lower="-1e6" upper="1e6" effort="1000" velocity="1000"/>
   </joint>
 
   <!-- ── Gazebo Fortress — Hydrodynamics plugin ────────────────── -->
@@ -245,8 +245,8 @@
       <!-- <yDotV>-160.95</yDotV> -->
       <!-- <zDotW>-160.95</zDotW> -->
       <xDotU>-53.65</xDotU>
-        <yDotV>-95.0</yDotV>
-        <zDotW>-95.0</zDotW>
+      <yDotV>-95.0</yDotV>
+      <zDotW>-95.0</zDotW>
       <kDotP>-0.005</kDotP>
       <mDotQ>-1.0</mDotQ>
       <nDotR>-1.0</nDotR>
@@ -267,6 +267,13 @@
     </plugin>
   </gazebo>
 
+  <!-- Gazebo joint state publisher -->
+  <gazebo>
+    <plugin filename="ignition-gazebo-joint-state-publisher-system"
+            name="ignition::gazebo::systems::JointStatePublisher">
+    </plugin>
+  </gazebo>
+
   <!-- ── Gazebo Fortress — Thruster plugins (T1–T8) ────────────── -->
   <gazebo>
     <plugin 
@@ -277,8 +284,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/1/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t1/force</topic>
     </plugin>
   </gazebo>
 
@@ -290,8 +298,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/2/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t2/force</topic>
     </plugin>
   </gazebo>
 
@@ -303,8 +312,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/3/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t3/force</topic>
     </plugin>
   </gazebo>
 
@@ -316,8 +326,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/4/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t4/force</topic>
     </plugin>
   </gazebo>
 
@@ -329,8 +340,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/5/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t5/force</topic>
     </plugin>
   </gazebo>
 
@@ -342,8 +354,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/6/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t6/force</topic>
     </plugin>
   </gazebo>
 
@@ -355,8 +368,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/7/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t7/force</topic>
     </plugin>
   </gazebo>
 
@@ -368,8 +382,9 @@
       <thrust_coefficient>1.0</thrust_coefficient>
       <fluid_density>1000</fluid_density>
       <propeller_diameter>0.1</propeller_diameter>
-      <velocity_control>true</velocity_control>
-      <topic>thrusters/8/force</topic>
+      <!-- <velocity_control>true</velocity_control> -->
+      <!-- <use_angvel_cmd>true</use_angvel_cmd> -->
+      <topic>thrusters/t8/force</topic>
     </plugin>
   </gazebo>
   <!-- Repeat plugin block for T2–T8 changing joint_name and topic -->
@@ -381,7 +396,8 @@
       <odom_topic>/nav/ins_odom</odom_topic>
       <robot_base_frame>base_link</robot_base_frame>
       <odom_frame>odom</odom_frame>
-      <publish_rate>50</publish_rate>
+      <publish_rate>100</publish_rate>
+      <dimensions>3</dimensions>
     </plugin>
   </gazebo>
 
@@ -389,7 +405,7 @@
   <gazebo reference="ins_link">
     <sensor name="ins_imu" type="imu">
       <always_on>true</always_on>
-      <update_rate>50</update_rate>
+      <update_rate>100</update_rate>
       <imu>
         <angular_velocity>
           <x><noise type="gaussian"><mean>0</mean><stddev>0.001</stddev></noise></x>
@@ -411,7 +427,7 @@
   <gazebo reference="depth_link">
     <sensor name="depth_sensor" type="air_pressure">
       <always_on>true</always_on>
-      <update_rate>50</update_rate>
+      <update_rate>100</update_rate>
       <air_pressure>
         <pressure>
           <noise type="gaussian"><mean>0</mean><stddev>20</stddev></noise>
