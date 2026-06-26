@@ -52,6 +52,12 @@
   gz_type_name: ignition.msgs.Double
   direction: ROS_TO_GZ
 
+- ros_topic_name: /tf
+  gz_topic_name: /model/atr_mp_rov/pose
+  ros_type_name: tf2_msgs/msg/TFMessage
+  gz_type_name: ignition.msgs.Pose_V
+  direction: GZ_TO_ROS
+
 - ros_topic_name: /nav/ins_odom
   gz_topic_name: /nav/ins_odom
   ros_type_name: nav_msgs/msg/Odometry
