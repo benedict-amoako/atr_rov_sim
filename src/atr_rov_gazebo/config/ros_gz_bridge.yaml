@@ -70,6 +70,12 @@
   gz_type_name: ignition.msgs.IMU
   direction: GZ_TO_ROS
 
+- ros_topic_name: /sonar/scan
+  gz_topic_name: /world/underwater/model/atr_mp_rov/link/base_link/sensor/sonar/scan
+  ros_type_name: sensor_msgs/msg/LaserScan
+  gz_type_name: ignition.msgs.LaserScan
+  direction: GZ_TO_ROS
+
 - ros_topic_name: /clock
   gz_topic_name: /clock
   ros_type_name: rosgraph_msgs/msg/Clock

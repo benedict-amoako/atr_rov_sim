@@ -1,0 +1,20 @@
+digraph G {
+"base_link" -> "thruster_1_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"odom" -> "base_link"[label=" Broadcaster: default_authority\nAverage rate: 50.199\nBuffer length: 5.02\nMost recent transform: 400.07\nOldest transform: 395.05\n"];
+"base_link" -> "thruster_2_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "thruster_3_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "thruster_4_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "thruster_5_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "thruster_6_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "thruster_7_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "thruster_8_link"[label=" Broadcaster: default_authority\nAverage rate: 20.2\nBuffer length: 5.0\nMost recent transform: 400.037\nOldest transform: 395.037\n"];
+"base_link" -> "depth_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "dvl_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "ins_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"base_link" -> "sonar_link"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+"ned_odom" -> "odom"[label=" Broadcaster: default_authority\nAverage rate: 10000.0\nBuffer length: 0.0\nMost recent transform: 0.0\nOldest transform: 0.0\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1782848009.1855612"[ shape=plaintext ] ;
+}->"ned_odom";
+}
