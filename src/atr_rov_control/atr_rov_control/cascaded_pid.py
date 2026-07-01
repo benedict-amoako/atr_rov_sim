@@ -5,7 +5,24 @@ from geometry_msgs.msg import PoseStamped, TwistStamped, WrenchStamped
 from std_msgs.msg import Float64MultiArray
 import math
 from .pid_utils import PID
-from tf_transformations import euler_from_quaternion
+from rcl_interfaces.msg import ParameterDescriptor
+
+def euler_from_quaternion(q):
+        """Convert quaternion (x, y, z, w) to roll, pitch, yaw (radians)."""
+        x, y, z, w = q
+        # Roll (x-axis rotation)
+        sinr_cosp = 2.0 * (w * x + y * z)
+        cosr_cosp = 1.0 - 2.0 * (x * x + y * y)
+        roll = math.atan2(sinr_cosp, cosr_cosp)
+        # Pitch (y-axis rotation)
+        sinp = 2.0 * (w * y - z * x)
+        sinp = max(-1.0, min(1.0, sinp))
+        pitch = math.asin(sinp)
+        # Yaw (z-axis rotation)
+        siny_cosp = 2.0 * (w * z + x * y)
+        cosy_cosp = 1.0 - 2.0 * (y * y + z * z)
+        yaw = math.atan2(siny_cosp, cosy_cosp)
+        return roll, pitch, yaw
 
 class CascadedPID(Node):
     def __init__(self):
@@ -31,6 +48,7 @@ class CascadedPID(Node):
         self.timer = self.create_timer(1.0 / rate, self.control_loop)
 
     def _declare_params(self):
+        descriptor = ParameterDescriptor(dynamic_typing=True)
         params = [
             'control_rate',  # Hz
             'outer_heave_kp', 'outer_heave_ki', 'outer_heave_kd',
@@ -50,7 +68,7 @@ class CascadedPID(Node):
             'integral_limit_mn'
         ]
         for param in params:
-            self.declare_parameter(param, 0.0)  # Default to 0.0 for all parameters
+            self.declare_parameter(param, 0.0, descriptor)  # Default to 0.0 for all parameters
 
     def _init_pids(self):
         lim_v = self.get_parameter('outer_velocity_limit').value
@@ -59,33 +77,37 @@ class CascadedPID(Node):
         ilim_f = self.get_parameter('integral_limit_xyz').value
         ilim_t = self.get_parameter('integral_limit_mn').value
 
-        def outer(dof):
-            return PID(
-                kp=self.get_parameter(f'outer_{dof}_kp').value,
-                ki=self.get_parameter(f'outer_{dof}_ki').value,
-                kd=self.get_parameter(f'outer_{dof}_kd').value,
-                output_min=-lim_v, output_max=lim_v
-            )
+        # def outer(dof):
+        #     return PID(
+        #         kp=self.get_parameter(f'outer_{dof}_kp').value,
+        #         ki=self.get_parameter(f'outer_{dof}_ki').value,
+        #         kd=self.get_parameter(f'outer_{dof}_kd').value,
+        #         output_min=-lim_v, output_max=lim_v
+        #     )
         
-        def inner(dof, lim, ilim):
-            return PID(
-                kp=self.get_parameter(f'inner_{dof}_kp').value,
-                ki=self.get_parameter(f'inner_{dof}_ki').value,
-                kd=self.get_parameter(f'inner_{dof}_kd').value,
-                output_min=-lim, output_max=lim,
-                integral_min=-ilim, integral_max=ilim
-            )
+        # def inner(dof, lim, ilim):
+        #     return PID(
+        #         kp=self.get_parameter(f'inner_{dof}_kp').value,
+        #         ki=self.get_parameter(f'inner_{dof}_ki').value,
+        #         kd=self.get_parameter(f'inner_{dof}_kd').value,
+        #         output_min=-lim, output_max=lim,
+        #         integral_min=-ilim, integral_max=ilim
+        #     )
         
         self.outer = {
-            'heave': outer('heave'), 'surge': outer('surge'), 
-            'sway': outer('sway'), 'pitch': outer('pitch'), 
-            'yaw': outer('yaw')}
+            'heave': PID(output_min=-lim_v, output_max=lim_v),
+            'surge': PID(output_min=-lim_v, output_max=lim_v),
+            'sway':  PID(output_min=-lim_v, output_max=lim_v),
+            'pitch': PID(output_min=-lim_v, output_max=lim_v),
+            'yaw':   PID(output_min=-lim_v, output_max=lim_v),
+        }
         self.inner = {
-            'heave': inner('heave', lim_f, ilim_f), 
-            'surge': inner('surge', lim_f, ilim_f),
-            'sway': inner('sway', lim_f, ilim_f), 
-            'pitch': inner('pitch', lim_t, ilim_t),
-            'yaw': inner('yaw', lim_t, ilim_t)}
+            'heave': PID(output_min=-lim_f, output_max=lim_f, integral_min=-ilim_f, integral_max=ilim_f),
+            'surge': PID(output_min=-lim_f, output_max=lim_f, integral_min=-ilim_f, integral_max=ilim_f),
+            'sway':  PID(output_min=-lim_f, output_max=lim_f, integral_min=-ilim_f, integral_max=ilim_f),
+            'pitch': PID(output_min=-lim_t, output_max=lim_t, integral_min=-ilim_t, integral_max=ilim_t),
+            'yaw':   PID(output_min=-lim_t, output_max=lim_t, integral_min=-ilim_t, integral_max=ilim_t),
+        }
         
     def odom_cb(self, msg):
         self.odom = msg
@@ -100,6 +122,17 @@ class CascadedPID(Node):
         if self.odom is None:
             return  # Wait until odometry is received
         
+        # Update gains from parameters (allows runtime tuning via ros2 param set)
+        for dof in ['heave','surge','sway','pitch','yaw']:
+            self.outer[dof].set_gains(
+                self.get_parameter(f'outer_{dof}_kp').value,
+                self.get_parameter(f'outer_{dof}_ki').value,
+                self.get_parameter(f'outer_{dof}_kd').value)
+            self.inner[dof].set_gains(
+                self.get_parameter(f'inner_{dof}_kp').value,
+                self.get_parameter(f'inner_{dof}_ki').value,
+                self.get_parameter(f'inner_{dof}_kd').value)
+            
         now = self.get_clock().now()
         if self.prev_time is None:
             self.prev_time = now
@@ -138,6 +171,11 @@ class CascadedPID(Node):
         tau_m = self.inner['pitch'].update(vp_demand - ang.y, dt)
         tau_n = self.inner['yaw'].update(vn_demand - ang.z, dt)
         tau_k = 0.0 # Roll: passive stabilization, no control
+
+        vz_demand = self.outer['heave'].update(sp_pos.z - pos.z, dt)
+        self.get_logger().info(
+            f'z_err={sp_pos.z - pos.z:.3f} vz_dem={vz_demand:.3f} '
+            f'vz_actual={vel.z:.3f} tau_z will be inner*{vz_demand - vel.z:.3f}')
 
         # Publish tau = [X, Y, Z, K, M, N]
         tau_msg = Float64MultiArray()

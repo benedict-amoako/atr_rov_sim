@@ -17,6 +17,7 @@ def generate_launch_description():
     cascaded_pid = Node(
         package='atr_rov_control',
         executable='cascaded_pid',
+        name='cascaded_pid',  
         output='screen',
         parameters=[pid_cfg, {'use_sim_time': True}])
     

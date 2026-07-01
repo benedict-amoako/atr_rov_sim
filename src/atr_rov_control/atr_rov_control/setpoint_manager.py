@@ -47,6 +47,9 @@ class SetpointManager(Node):
         self.pos_active.pose.position.y = self._ramp(self.pos_active.pose.position.y, self.pos_desired.pose.position.y, r_lin)
         self.pos_active.pose.position.z = self._ramp(self.pos_active.pose.position.z, self.pos_desired.pose.position.z, r_lin)
 
+        # Pass velocity feedforward through directly (no ramping needed)
+        self.vel_active = self.vel_desired
+
         self.pos_active.header.stamp = self.get_clock().now().to_msg()
         self.pos_active.header.frame_id = 'ned_odom'
         self.pub_pos.publish(self.pos_active)
