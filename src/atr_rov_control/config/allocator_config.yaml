@@ -1,0 +1,15 @@
+wls_allocator:
+  ros__parameters:
+    # Thruster force limits (N)
+    f_min: [-200.0, -200.0, -200.0, -200.0, -100.0, -100.0, -100.0, -100.0]
+    f_max: [ 200.0,  200.0,  200.0,  200.0,  100.0,  100.0,  100.0,  100.0]
+
+    # DOF tracking weights W_tau diagonal
+    # Roll (index 3) = 0: uncontrolled DOF
+    w_tau: [1.0e6, 1.0e6, 1.0e6, 0.0, 1.0e6, 1.0e6]
+
+    # Thruster effort weights W_f diagonal (equal weighting)
+    w_f: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+
+    # Thruster fault exclusion: set w_f[i] = 1e6 to exclude thruster i
+    # Example: w_f: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0e6, 1.0]  excludes T7

@@ -1,0 +1,49 @@
+cascaded_pid:
+  ros__parameters:
+
+    control_rate: 50.0 # Hz
+
+    # Outer loop PID gains (position -> velocity demand)
+    # Start conservative: low kp, no Ki or Kd
+    outer_heave_kp: 0.5
+    outer_heave_ki: 0.0
+    outer_heave_kd: 0.0
+    outer_surge_kp: 0.5
+    outer_surge_ki: 0.0
+    outer_surge_kd: 0.0
+    outer_sway_kp: 0.5
+    outer_sway_ki: 0.0
+    outer_sway_kd: 0.0
+    outer_pitch_kp: 0.5
+    outer_pitch_ki: 0.0
+    outer_pitch_kd: 0.0
+    outer_yaw_kp: 0.5
+    outer_yaw_ki: 0.0
+    outer_yaw_kd: 0.0
+
+    # Inner loop PID gains (velocity error -> force/torque demand)
+    # Replace with Phase 1 values from results/phase1_gains.mat
+    inner_heave_kp: 100.0
+    inner_heave_ki: 0.8
+    inner_heave_kd: 20.0
+    inner_surge_kp: 80.0
+    inner_surge_ki: 4.0
+    inner_surge_kd: 110.0
+    inner_sway_kp: 70.0
+    inner_sway_ki: 2.0
+    inner_sway_kd: 35.0
+    inner_pitch_kp: 800.0
+    inner_pitch_ki: 10.0
+    inner_pitch_kd: 200.0
+    inner_yaw_kp: 200.0
+    inner_yaw_ki: 2.0
+    inner_yaw_kd: 50.0
+
+    # Output limits for inner loop PID controllers
+    output_velocity_limit: 1.0 # m/s max velocity demand
+    inner_force_limit_xyz: 200.0 # N max force per DOF
+    inner_torque_limit_mn: 50.0 # N.m max torque per pitch/yaw demand
+
+    # Integral anti-windup limits
+    integral_limit_xyz: 100.0 # N max integral term for force DOFs
+    integral_limit_mn: 20.0 # N.m max integral term for torque DOFs

@@ -23,9 +23,9 @@ setup(
     license='TODO: License declaration',
     entry_points={
         'console_scripts': [
-            # 'setpoint_manager = atr_rov_control.setpoint_manager:main',
-            # 'cascaded_pid = atr_rov_control.cascaded_pid:main',
-            # 'wls_allocator = atr_rov_control.wls_allocator:main',
+            'setpoint_manager = atr_rov_control.setpoint_manager:main',
+            'cascaded_pid = atr_rov_control.cascaded_pid:main',
+            'wls_allocator = atr_rov_control.wls_allocator:main',
         ],
     },
 )

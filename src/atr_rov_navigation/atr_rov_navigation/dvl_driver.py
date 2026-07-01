@@ -41,6 +41,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = DVLDriver()
     rclpy.spin(node)
+    node.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':
